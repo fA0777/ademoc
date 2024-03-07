@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user</title>
+</head>
+<body>
+<div id="app">
+    <h1>欢迎您</h1>
+    <div class="block">
+        <el-avatar :size="50" :src="worker.profilePhoto"></el-avatar>
+        {{worker.name}}
+    </div>
+    <a href="javascript:location.href='workers/logout'">退出登录</a>
+    <hr>
+    <h2>功能列表</h2>
+    <hr>
+    <el-row>
+        <el-link href="workerBasicInformation.html" type="Info">基本信息</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerAttendanceRecord.html" type="danger">出勤记录</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerLeaveRecords.html" type="primary">请假申请</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerResignations.html" type="info">离职申请</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerTrainingActivities.html" type="warning">培训活动</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerTrainingActivitiesRecords.html" type="success">我参与的培训活动</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerAnnouncements.html" type="Warning">公告信息</el-link>
+    </el-row>
+    <el-row>
+        <el-link href="workerSalaryRecords.html" type="Success">查看工资</el-link>
+    </el-row>
+
+
+</div>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link href="element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+
+<script src="js/axios-0.18.0.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        mounted() {
+            this.getWorker();
+        },
+        methods: {
+            getWorker() {
+                axios({
+                    method: "get",
+                    url: "http://localhost:8080/ademob/workers/getWorker"
+                }).then(resp => {
+                    this.worker = resp.data
+                })
+            }
+        },
+        data() {
+            return {
+
+                // 员工模型数据
+                worker: {
+                    id: "",
+                    name: "",
+                    password: "",
+                    trueName: "",
+                    clockInHour: "",
+                    clockInMinute: "",
+                    clockOutHour: "",
+                    clockOutHourMinute: "",
+                    profilePhoto: "",
+                    basicSalary: "",
+                    status: "",
+                    managerId: ""
+                },
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
